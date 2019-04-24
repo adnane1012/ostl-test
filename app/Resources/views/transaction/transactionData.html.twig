@@ -1,0 +1,27 @@
+{% for transaction in transactions %}
+    <tr>
+        <td>{{ transaction.title }}</td>
+        <td>{{ transaction.amount }}</td>
+        <td>{% if transaction.isInput %}Yes{% else %}No{% endif %}</td>
+        <td>{{ transaction.description }}</td>
+        <td>{% if transaction.isValid %}Yes{% else %}No{% endif %}</td>
+        <td>{% if transaction.category %}{{ transaction.category }}{% endif %}</td>
+        <td>
+            {% if transaction.tags %}
+                <ul>
+                    {% for tag in transaction.tags %}
+                        <li> {{ tag }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </td>
+        
+        <td>
+            <i class="far fa-eye"></i>
+            <a href="{{ path('_show', { 'id': transaction.id }) }}">show</a>
+            <br>
+            <i class="fas fa-edit"></i>
+            <a href="{{ path('_edit', { 'id': transaction.id }) }}">edit</a>
+        </td>
+    </tr>
+{% endfor %}

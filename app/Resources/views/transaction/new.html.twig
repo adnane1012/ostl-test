@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Transaction creation</h1>
+    <a href="{{ path('_index') }}"><i class="fas fa-step-backward"></i>Back to the list</a>
+    
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    <input type="submit" value="Create" class="btn btn-primary"/>
+    {{ form_end(form) }}
+{% endblock %}
