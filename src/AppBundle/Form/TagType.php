@@ -14,13 +14,15 @@ class TagType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('name')->add('transactions');
-    }/**
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Tag'
+            'data_class' => 'AppBundle\Entity\Tag',
         ));
     }
 
@@ -31,6 +33,4 @@ class TagType extends AbstractType
     {
         return 'appbundle_tag';
     }
-
-
 }

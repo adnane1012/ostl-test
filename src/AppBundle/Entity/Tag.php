@@ -6,7 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Tag
+ * Tag.
  *
  * @ORM\Table(name="tag")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\TagRepository")
@@ -45,12 +45,13 @@ class Tag
     /**
      * Tag constructor.
      */
-    public function __construct() {
+    public function __construct()
+    {
         $this->transactions = new ArrayCollection();
     }
 
     /**
-     * Get id
+     * Get id.
      *
      * @return int
      */
@@ -60,7 +61,7 @@ class Tag
     }
 
     /**
-     * Set name
+     * Set name.
      *
      * @param string $name
      *
@@ -74,7 +75,7 @@ class Tag
     }
 
     /**
-     * Get name
+     * Get name.
      *
      * @return string
      */
@@ -90,9 +91,9 @@ class Tag
     {
         return $this->transactions;
     }
+
     public function __toString()
     {
         return $this->getName();
     }
-
 }

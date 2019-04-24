@@ -5,7 +5,8 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Tag;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Tag controller.
@@ -26,7 +27,7 @@ class TagController extends Controller
 
         $tags = $em->getRepository('AppBundle:Tag')->findAll();
 
-        return $this->render('tag/index.html.twig', array(
+        return $this->render('tag/screen1.html.twig', array(
             'tags' => $tags,
         ));
     }

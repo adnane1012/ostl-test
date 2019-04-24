@@ -6,7 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Category
+ * Category.
  *
  * @ORM\Table(name="category")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\CategoryRepository")
@@ -43,7 +43,7 @@ class Category
     }
 
     /**
-     * Get id
+     * Get id.
      *
      * @return int
      */
@@ -53,7 +53,7 @@ class Category
     }
 
     /**
-     * Set title
+     * Set title.
      *
      * @param string $title
      *
@@ -67,7 +67,7 @@ class Category
     }
 
     /**
-     * Get title
+     * Get title.
      *
      * @return string
      */
@@ -91,9 +91,9 @@ class Category
     {
         $this->transactions = $transactions;
     }
+
     public function __toString()
     {
         return $this->getTitle();
     }
-
 }

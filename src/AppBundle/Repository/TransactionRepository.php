@@ -27,13 +27,13 @@ class TransactionRepository extends EntityRepository
         }
         $queryBuilder = $this->createQueryBuilder('t')
             ->select()
-            ->innerJoin('t.tags', 'tag');
+            ->leftJoin('t.tags', 'tag');
 
         $filter = [];
         if ($transaction->getTitle()) {
             $filter['t.title'] = [
                 'operator' => 'LIKE',
-                'values' => '%' . $transaction->getTitle() . '%',
+                'values' => '%'.$transaction->getTitle().'%',
             ];
         }
         if ($transaction->getAmount()) {
@@ -45,16 +45,16 @@ class TransactionRepository extends EntityRepository
         if ($transaction->getDescription()) {
             $filter['t.description'] = [
                 'operator' => 'LIKE',
-                'values' => '%' . $transaction->getDescription() . '%',
+                'values' => '%'.$transaction->getDescription().'%',
             ];
         }
-        if ($transaction->getIsValid()) {
+        if (null !== $transaction->getIsValid()) {
             $filter['t.isValid'] = [
                 'operator' => '=',
                 'values' => $transaction->getIsValid(),
             ];
         }
-        if ($transaction->getIsInput()) {
+        if (null !== $transaction->getIsInput()) {
             $filter['t.isInput'] = [
                 'operator' => '=',
                 'values' => $transaction->getIsInput(),
@@ -84,11 +84,11 @@ class TransactionRepository extends EntityRepository
 
     /**
      * @param int $month
+     *
      * @return array
      */
     public function getFiltredTransactionByMonth($month)
     {
-
         $queryBuilder = $this->createQueryBuilder('t')
             ->select('t')
             ->where('t.isValid = 1')
@@ -102,7 +102,7 @@ class TransactionRepository extends EntityRepository
 
     /**
      * @param QueryBuilder $query
-     * @param array $filters
+     * @param array        $filters
      */
     private function setConditionFilters(QueryBuilder $query, array $filters = [])
     {
@@ -110,18 +110,50 @@ class TransactionRepository extends EntityRepository
 
         foreach ($filters as $key => $value) {
             $operator = $value['operator'];
-            $whereCondition = $key . ' ' . $operator . ' :param' . $loop;
+            $whereCondition = $key.' '.$operator.' :param'.$loop;
 
             if ('IN' === $operator) {
-                $whereCondition = $key . ' IN (:param' . $loop . ')';
+                $whereCondition = $key.' IN (:param'.$loop.')';
             }
             if (0 == $loop) {
                 $query->where($whereCondition);
             } else {
                 $query->andwhere($whereCondition);
             }
-            $query->setParameter(':param' . $loop, $value['values']);
+            $query->setParameter(':param'.$loop, $value['values']);
             ++$loop;
         }
+    }
+
+    public function getTreasuryInfos($month)
+    {
+        $inputInfos = $this->getOperationData($month, true);
+        $outputInfos = $this->getOperationData($month, false);
+        $noInfos = 'no infos';
+
+        return [
+            'countInputs' => isset($inputInfos['countInput']) ? $inputInfos['countInput'] : $noInfos,
+            'countOutputs' => isset($outputInfos['countOutput']) ? $outputInfos['countOutput'] : $noInfos,
+            'treasury' => (isset($inputInfos['countInput']) && isset($outputInfos['countOutput'])) ? $inputInfos['countInput'] - $outputInfos['countOutput'] : $noInfos,
+        ];
+    }
+
+    private function getOperationData($month, $isInput)
+    {
+        $operationLabel = 'Input';
+        if (!$isInput) {
+            $operationLabel = 'Output';
+        }
+        $queryBuilder = $this->createQueryBuilder('t')
+            ->select('count(t) as count'.$operationLabel.' ,SUM(t.amount) as sum'.$operationLabel)
+            ->where('t.isValid = 1')
+            ->andWhere('MONTH(t.createdAt) = :month')
+            ->andWhere('YEAR(t.createdAt) = :year')
+            ->andWhere('t.isInput = :isInput')
+            ->setParameter(':month', $month)
+            ->setParameter(':isInput', $isInput)
+            ->setParameter(':year', date('Y'));
+
+        return $queryBuilder->getQuery()->getOneOrNullResult();
     }
 }

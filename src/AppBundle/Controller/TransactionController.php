@@ -3,13 +3,10 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Transaction;
-use FOS\RestBundle\View\View;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
-use FOS\RestBundle\Controller\Annotations as Rest;
-use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Transaction controller.
@@ -41,7 +38,7 @@ class TransactionController extends Controller
             $request->get('limit', 5)
         );
 
-        return $this->render('transaction/index.html.twig', array(
+        return $this->render('transaction/screen1.html.twig', array(
             'transactions' => $transactions,
             'form' => $form->createView(),
         ));

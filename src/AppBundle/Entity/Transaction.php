@@ -6,7 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Transaction
+ * Transaction.
  *
  * @ORM\Table(name="transaction")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\TransactionRepository")
@@ -86,13 +86,14 @@ class Transaction
     /**
      * Transaction constructor.
      */
-    public function __construct() {
+    public function __construct()
+    {
         $this->tags = new ArrayCollection();
         $this->category = new ArrayCollection();
     }
 
     /**
-     * Get id
+     * Get id.
      *
      * @return int
      */
@@ -102,7 +103,7 @@ class Transaction
     }
 
     /**
-     * Set title
+     * Set title.
      *
      * @param string $title
      *
@@ -116,7 +117,7 @@ class Transaction
     }
 
     /**
-     * Get title
+     * Get title.
      *
      * @return string
      */
@@ -126,7 +127,7 @@ class Transaction
     }
 
     /**
-     * Set amount
+     * Set amount.
      *
      * @param float $amount
      *
@@ -140,7 +141,7 @@ class Transaction
     }
 
     /**
-     * Get amount
+     * Get amount.
      *
      * @return float
      */
@@ -150,9 +151,9 @@ class Transaction
     }
 
     /**
-     * Set isInput
+     * Set isInput.
      *
-     * @param boolean $isInput
+     * @param bool $isInput
      *
      * @return Transaction
      */
@@ -164,7 +165,7 @@ class Transaction
     }
 
     /**
-     * Get isInput
+     * Get isInput.
      *
      * @return bool
      */
@@ -174,7 +175,7 @@ class Transaction
     }
 
     /**
-     * Set description
+     * Set description.
      *
      * @param string $description
      *
@@ -188,7 +189,7 @@ class Transaction
     }
 
     /**
-     * Get description
+     * Get description.
      *
      * @return string
      */
@@ -198,9 +199,9 @@ class Transaction
     }
 
     /**
-     * Set isValid
+     * Set isValid.
      *
-     * @param boolean $isValid
+     * @param bool $isValid
      *
      * @return Transaction
      */
@@ -212,7 +213,7 @@ class Transaction
     }
 
     /**
-     * Get isValid
+     * Get isValid.
      *
      * @return bool
      */
@@ -222,7 +223,7 @@ class Transaction
     }
 
     /**
-     * Set createdAt
+     * Set createdAt.
      *
      * @param \DateTime $createdAt
      *
@@ -236,7 +237,7 @@ class Transaction
     }
 
     /**
-     * Get createdAt
+     * Get createdAt.
      *
      * @return \DateTime
      */
@@ -246,7 +247,7 @@ class Transaction
     }
 
     /**
-     * Set updatedAt
+     * Set updatedAt.
      *
      * @param \DateTime $updatedAt
      *
@@ -260,7 +261,7 @@ class Transaction
     }
 
     /**
-     * Get updatedAt
+     * Get updatedAt.
      *
      * @return \DateTime
      */
@@ -303,6 +304,6 @@ class Transaction
 
     public function __toString()
     {
-       return "";
+        return '';
     }
 }

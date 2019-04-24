@@ -3,7 +3,7 @@
 namespace AppBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -17,9 +17,23 @@ class TransactionType extends AbstractType
         $builder
             ->add('title')
             ->add('amount')
-            ->add('isInput')
+            ->add('isInput', ChoiceType::class, array(
+                'choices' => array(
+                    'Yes' => true,
+                    'No' => false,
+                ),
+                'placeholder' => 'is input',
+                'choices_as_values' => true,
+            ))
             ->add('description')
-            ->add('isValid')
+            ->add('isValid', ChoiceType::class, array(
+                'choices' => array(
+                    'Yes' => true,
+                    'No' => false,
+                ),
+                'placeholder' => 'is valid',
+                'choices_as_values' => true,
+            ))
             ->add('category')
             ->add('tags');
     }

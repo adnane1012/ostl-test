@@ -7,9 +7,7 @@
             {{ message }}
         </div>
     {% endfor %}
-    
     <a href="{{ path('_index') }}"><i class="fas fa-step-backward"></i>Back to the list</a>
-    
     {{ form_start(edit_form) }}
     {{ form_widget(edit_form) }}
     <input type="submit" style="float:left" class="btn btn-primary mr-1" value="Enregistrer"/>

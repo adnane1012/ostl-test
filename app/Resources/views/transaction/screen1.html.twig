@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Transactions list</h1>
+    <h1>Transactions list (Screen 1)</h1>
     
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
          stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus-circle">
@@ -21,9 +21,9 @@
             <tr>
                 <th>Title</th>
                 <th>Amount</th>
-                <th>Is input</th>
+                <th>IsInput</th>
                 <th>Description</th>
-                <th>Is valid</th>
+                <th>IsValid</th>
                 <th>Category</th>
                 <th>Tags</th>
                 <th>Actions</th>
@@ -46,7 +46,7 @@
                     </td>
                 </tr>
             </form>
-            {% include 'transaction/transactionData.html.twig' with {'transactions': transactions} %}
+            {% include 'transaction/transactionData.html.twig' with {'transactions': transactions, 'Paginator' : false} %}
             </tbody>
         </table>
         <div class="navigation">
@@ -60,6 +60,13 @@
         $('.page-link ').click(function (event) {
             event.preventDefault();
             $("#pagination").val($(this).data("page"));
+            $("#filterForm").submit();
+        })
+        $('a.sortable ').click(function (event) {
+            event.preventDefault();
+            $("#pagination").val("1");
+            $("#sortable").val("title");
+            $("#direction").val('desc');
             $("#filterForm").submit();
         })
     </script>

@@ -2,7 +2,7 @@
 
 {% block body %}
     
-    <h1>Transactions list</h1>
+    <h1>Transactions list (Screen 2)</h1>
     <div class="form-group">
         <div class="input-group">
             <select type="text" class="form-control" id="monthFilter">
@@ -22,24 +22,8 @@
             </select>
         </div>
     </div>
-    <div class="table-responsive">
-        <table class="table table-striped table-sm">
-            <thead>
-            <tr>
-                <th>Title</th>
-                <th>Amount</th>
-                <th>Is input</th>
-                <th>Description</th>
-                <th>Is valid</th>
-                <th>Category</th>
-                <th>Tags</th>
-                <th>Actions</th>
-            </tr>
-            </thead>
-            <tbody id="transactionsContainer">
-            
-            </tbody>
-        </table>
+    <div id="transactionsContainer" class="table-responsive">
+    
     </div>
 {% endblock %}
 
@@ -48,23 +32,42 @@
         var Screen2 = {
             init: function () {
                 this.$monthFilter = "#monthFilter";
-                this.$transactionsContainer = "#transactionsContainer"
+                this.$transactionsContainer = "#transactionsContainer";
                 this.bindMonthChange();
+                this.showLoader();
+                this.initToCurrentMonth();
+            },
+            initToCurrentMonth: function () {
+                var d = new Date(),
+                    currentMonth = d.getMonth() + 1;
+                console.log(currentMonth);
+                this.getAndRenderTransaction(currentMonth);
+                $(this.$monthFilter).val(currentMonth);
             },
             bindMonthChange: function () {
                 that = this;
                 $(this.$monthFilter).on('change', function (event) {
                     that.showLoader();
                     that.getAndRenderTransaction($(this).val());
+                });
+            },
+            bindPagination: function () {
+                that = this;
+                $('.page-link').on('click', function (event) {
+                    event.preventDefault();
+                    that.showLoader();
+                    that.getAndRenderTransaction($(that.$monthFilter).val(), $(this).data("page"));
                 })
             },
-            getAndRenderTransaction: function ($month) {
+            getAndRenderTransaction: function ($month, page = 1) {
                 $.get("{{ path('api_index') }}", {
                     'month': $month,
+                    'page': page,
                 }, function (html) {
                     $(Screen2.$transactionsContainer).html(html);
                 }).always(function () {
                     Screen2.closeLoader();
+                    Screen2.bindPagination();
                 });
 
             },
