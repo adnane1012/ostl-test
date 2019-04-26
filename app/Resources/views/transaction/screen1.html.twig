@@ -62,12 +62,5 @@
             $("#pagination").val($(this).data("page"));
             $("#filterForm").submit();
         })
-        $('a.sortable ').click(function (event) {
-            event.preventDefault();
-            $("#pagination").val("1");
-            $("#sortable").val("title");
-            $("#direction").val('desc');
-            $("#filterForm").submit();
-        })
     </script>
 {% endblock %}
